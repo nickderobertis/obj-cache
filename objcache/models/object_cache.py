@@ -6,7 +6,7 @@ from objcache.logic.subpath import get_result_subpath
 from BTrees.OOBTree import OOBTree
 
 
-class ResultCache:
+class ObjectCache:
     _root = None
     _db = None
 
