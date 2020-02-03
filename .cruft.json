@@ -1,0 +1,17 @@
+{
+    "template": "https://github.com/nickderobertis/cookiecutter-pypi-sphinx",
+    "commit": "b7eab35a0360b489172e7b20ac0dcae23a17a446",
+    "context": {
+        "cookiecutter": {
+            "package_name": "objcache",
+            "full_name": "Python Simple Object Cache",
+            "repo_name": "obj-cache",
+            "repo_username": "nickderobertis",
+            "short_description": "Simple Redis-like interface to storing arbirary Python objects. A high-level wrapper around ZoDB.",
+            "package_author": "Nick DeRobertis",
+            "author_email": "whoopnip@gmail.com",
+            "google_analytics_id": "UA-157595479-1",
+            "_template": "https://github.com/nickderobertis/cookiecutter-pypi-sphinx"
+        }
+    }
+}
