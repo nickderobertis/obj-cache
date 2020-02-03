@@ -1,5 +1,6 @@
 import os
 from dataclasses import dataclass
+import time
 from typing import Sequence, Any
 from objcache.models.object_cache import ObjectCache
 
@@ -19,4 +20,12 @@ class ObjectClassForTesting:
 
 
 def delete_object_cache_for_testing():
-    os.remove(DB_FILE_PATH)
+    _delete_with_retries(DB_FILE_PATH)
+
+
+def _delete_with_retries(file_path: str, retries=10, sleep=0.1):
+    for i in range(retries):
+        try:
+            return os.remove(file_path)
+        except (FileNotFoundError, OSError, PermissionError):
+            time.sleep(sleep)
