@@ -5,7 +5,7 @@
 
 ## Overview
 
-Simple Redis-like interface to storing arbirary Python objects. A high-level wrapper around ZoDB.
+Simple Redis-like interface to storing arbitrary Python objects. A high-level wrapper around ZoDB.
 
 ## Getting Started
 
@@ -18,9 +18,16 @@ pip install objcache
 A simple example:
 
 ```python
-import objcache
+>>> from objcache import ObjectCache
 
-# Do something with objcache
+>>> cache = ObjectCache('cache.zodb', ('a', 'b'))
+>>> cache.store(5)
+
+# Later session
+>>> cache = ObjectCache('cache.zodb', ('a', 'b'))
+>>> result = cache.get()
+>>> print(result)
+5
 ```
 
 ## Links
