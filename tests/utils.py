@@ -6,6 +6,12 @@ from objcache.models.object_cache import ObjectCache
 
 GENERATED_PATH = os.path.join('tests', 'generated_files')
 DB_FILE_PATH = os.path.join(GENERATED_PATH, 'results.zodb')
+ALL_DB_FILE_PATHS = [
+    DB_FILE_PATH,
+    DB_FILE_PATH + '.index',
+    DB_FILE_PATH + '.lock',
+    DB_FILE_PATH + '.tmp',
+]
 
 
 class ObjectCacheForTesting(ObjectCache):
@@ -20,7 +26,8 @@ class ObjectClassForTesting:
 
 
 def delete_object_cache_for_testing():
-    _delete_with_retries(DB_FILE_PATH)
+    for path in ALL_DB_FILE_PATHS:
+        _delete_with_retries(path)
 
 
 def _delete_with_retries(file_path: str, retries=10, sleep=0.1):

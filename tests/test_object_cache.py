@@ -1,8 +1,8 @@
+import os
 from typing import Optional, Sequence
-import gc
 
 from objcache import ObjectCache
-from tests.utils import ObjectCacheForTesting, delete_object_cache_for_testing, ObjectClassForTesting
+from tests.utils import ObjectCacheForTesting, delete_object_cache_for_testing, ObjectClassForTesting, GENERATED_PATH
 
 
 class TestObjectCache:
@@ -11,11 +11,12 @@ class TestObjectCache:
     stored_result: ObjectClassForTesting = ObjectClassForTesting('abc')
 
     def setup_method(self):
+        if not os.path.exists(GENERATED_PATH):
+            os.makedirs(GENERATED_PATH)
         self.cache = ObjectCacheForTesting(self.test_cache_path)
 
     def teardown_method(self):
         self.cache = None
-        gc.collect()
         delete_object_cache_for_testing()
 
     def test_store_and_get(self):
