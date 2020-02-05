@@ -1,4 +1,5 @@
 from typing import Optional, Sequence
+import gc
 
 from objcache import ObjectCache
 from tests.utils import ObjectCacheForTesting, delete_object_cache_for_testing, ObjectClassForTesting
@@ -14,6 +15,7 @@ class TestObjectCache:
 
     def teardown_method(self):
         self.cache = None
+        gc.collect()
         delete_object_cache_for_testing()
 
     def test_store_and_get(self):
