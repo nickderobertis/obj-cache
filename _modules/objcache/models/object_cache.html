@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>objcache.models.object_cache &mdash; objcache 0.1.0 documentation</title>
+  <title>objcache.models.object_cache &mdash; objcache 0.1.1 documentation</title>
   
 
   
@@ -22,13 +22,13 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../../_static/language_data.js"></script>
-        <script type="text/javascript" src="../../../_static/clipboard.min.js"></script>
-        <script type="text/javascript" src="../../../_static/copybutton.js"></script>
-        <script type="text/javascript">var copybuttonSkipText = '>>> ';</script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+        <script >var copybuttonSkipText = '>>> ';</script>
     
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.1.0
+                0.1.1
               </div>
             
           
@@ -94,7 +94,7 @@
               <p class="caption"><span class="caption-text">Tutorial</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">Getting started with objcache</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../auto_examples/index.html">This is my gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../auto_examples/index.html">Examples</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API Documentation</span></p>
 <ul>
@@ -172,6 +172,21 @@
 
 
 <div class="viewcode-block" id="ObjectCache"><a class="viewcode-back" href="../../../api/objcache.models.html#objcache.models.object_cache.ObjectCache">[docs]</a><span class="k">class</span> <span class="nc">ObjectCache</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Store Python objects on the filesystem and load them later. Built on top of ZoDB but provides</span>
+<span class="sd">    an easier to use interface.</span>
+
+<span class="sd">    :Examples:</span>
+
+<span class="sd">        &gt;&gt;&gt; from objcache import ObjectCache</span>
+<span class="sd">        &gt;&gt;&gt; cache = ObjectCache(&#39;cache.zodb&#39;, (&#39;a&#39;, &#39;b&#39;))</span>
+<span class="sd">        &gt;&gt;&gt; cache.store(5)</span>
+<span class="sd">        &gt;&gt;&gt; # Later session</span>
+<span class="sd">        &gt;&gt;&gt; cache = ObjectCache(&#39;cache.zodb&#39;, (&#39;a&#39;, &#39;b&#39;))</span>
+<span class="sd">        &gt;&gt;&gt; result = cache.get()</span>
+<span class="sd">        &gt;&gt;&gt; print(result)</span>
+<span class="sd">        5</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">_root</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">_db</span> <span class="o">=</span> <span class="kc">None</span>
 
@@ -195,6 +210,9 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_root</span>
 
 <div class="viewcode-block" id="ObjectCache.store"><a class="viewcode-back" href="../../../api/objcache.models.html#objcache.models.object_cache.ObjectCache.store">[docs]</a>    <span class="k">def</span> <span class="nf">store</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">result</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Store Python object on the filesystem</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">result_subpath</span> <span class="o">=</span> <span class="n">get_result_subpath</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db_root</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache_path</span><span class="p">,</span> <span class="n">create_oobtree</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="n">result_subpath</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">cache_path</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">result</span>
@@ -204,6 +222,9 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_close_transaction</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="ObjectCache.get"><a class="viewcode-back" href="../../../api/objcache.models.html#objcache.models.object_cache.ObjectCache.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get Python object from the filesystem</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">result_subpath</span> <span class="o">=</span> <span class="n">get_result_subpath</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db_root</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache_path</span><span class="p">)</span>
             <span class="n">result</span> <span class="o">=</span> <span class="n">result_subpath</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">cache_path</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
@@ -218,6 +239,9 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_close_transaction</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="ObjectCache.delete"><a class="viewcode-back" href="../../../api/objcache.models.html#objcache.models.object_cache.ObjectCache.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete previously stored Python object from the filesystem</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">result_subpath</span> <span class="o">=</span> <span class="n">get_result_subpath</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db_root</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache_path</span><span class="p">)</span>
             <span class="k">del</span> <span class="n">result_subpath</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">cache_path</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
@@ -227,6 +251,9 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_close_transaction</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="ObjectCache.exists"><a class="viewcode-back" href="../../../api/objcache.models.html#objcache.models.object_cache.ObjectCache.exists">[docs]</a>    <span class="k">def</span> <span class="nf">exists</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check whether there is already a Python object stored on the filesystem for this cache path</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>

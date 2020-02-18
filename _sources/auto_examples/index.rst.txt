@@ -4,10 +4,10 @@
 
 .. _sphx_glr_auto_examples:
 
-This is my gallery
+Examples
 ==================
 
-Below is a gallery of examples
+TODO: Add examples
 
 .. raw:: html
 
