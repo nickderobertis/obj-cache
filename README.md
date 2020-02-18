@@ -18,15 +18,15 @@ pip install objcache
 A simple example:
 
 ```python
->>> from objcache import ObjectCache
+from objcache import ObjectCache
 
->>> cache = ObjectCache('cache.zodb', ('a', 'b'))
->>> cache.store(5)
+cache = ObjectCache('cache.zodb', ('a', 'b'))
+cache.store(5)
 
 # Later session
->>> cache = ObjectCache('cache.zodb', ('a', 'b'))
->>> result = cache.get()
->>> print(result)
+cache = ObjectCache('cache.zodb', ('a', 'b'))
+result = cache.get()
+print(result)
 5
 ```
 
