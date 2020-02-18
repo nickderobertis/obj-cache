@@ -7,6 +7,21 @@ from BTrees.OOBTree import OOBTree
 
 
 class ObjectCache:
+    """
+    Store Python objects on the filesystem and load them later. Built on top of ZoDB but provides
+    an easier to use interface.
+
+    :Examples:
+
+        >>> from objcache import ObjectCache
+        >>> cache = ObjectCache('cache.zodb', ('a', 'b'))
+        >>> cache.store(5)
+        >>> # Later session
+        >>> cache = ObjectCache('cache.zodb', ('a', 'b'))
+        >>> result = cache.get()
+        >>> print(result)
+        5
+    """
     _root = None
     _db = None
 
@@ -30,6 +45,9 @@ class ObjectCache:
         return self._root
 
     def store(self, result: Any) -> None:
+        """
+        Store Python object on the filesystem
+        """
         try:
             result_subpath = get_result_subpath(self.db_root, self.cache_path, create_oobtree=True)
             result_subpath[self.cache_path[-1]] = result
@@ -39,6 +57,9 @@ class ObjectCache:
             self._close_transaction()
 
     def get(self) -> Any:
+        """
+        Get Python object from the filesystem
+        """
         try:
             result_subpath = get_result_subpath(self.db_root, self.cache_path)
             result = result_subpath[self.cache_path[-1]]
@@ -53,6 +74,9 @@ class ObjectCache:
             self._close_transaction()
 
     def delete(self) -> None:
+        """
+        Delete previously stored Python object from the filesystem
+        """
         try:
             result_subpath = get_result_subpath(self.db_root, self.cache_path)
             del result_subpath[self.cache_path[-1]]
@@ -62,6 +86,9 @@ class ObjectCache:
             self._close_transaction()
 
     def exists(self) -> bool:
+        """
+        Check whether there is already a Python object stored on the filesystem for this cache path
+        """
         try:
             result = self.get()
         except KeyError:
